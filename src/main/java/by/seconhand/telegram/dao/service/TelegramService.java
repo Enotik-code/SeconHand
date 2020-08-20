@@ -29,7 +29,8 @@ public class TelegramService {
     }
 
     public Client buildNewClient(Long idChat) {
-        return new Client(idChat, LocalDate.now(),LocalDate.now().plusWeeks(2), "Test time" );
+       // return new Client(idChat, LocalDate.now(),LocalDate.now().plusWeeks(2), "Test time" );
+        return null;
     }
 
 }

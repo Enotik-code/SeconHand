@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode
 @ToString
+@Table(name = "goods")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,5 +20,7 @@ public class Goods implements Serializable {
     @Column(name = "good_name")
     private String name;
 
+    @Column(name = "price")
+    private Long price;
 
 }
