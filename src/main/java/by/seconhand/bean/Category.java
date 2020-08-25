@@ -24,5 +24,5 @@ public class Category implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Goods> products;
+    private Set<Goods> goods;
 }

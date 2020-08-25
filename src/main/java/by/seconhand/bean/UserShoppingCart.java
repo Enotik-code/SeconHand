@@ -23,8 +23,8 @@ public class UserShoppingCart  implements Serializable {
     @EqualsAndHashCode.Exclude
     private UserShoppingCartId pk;
 
-    @Column(name = "quantity_product")
-    private Integer quantityProduct;
+    @Column(name = "quantity_goods")
+    private Integer quantityGoods;
 
     @Column(name = "summ_order")
     private BigDecimal summOrder;

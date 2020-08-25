@@ -31,16 +31,16 @@ public class UserShoppingCartService {
         return userShoppingCart.orElse(null);
     }
 
-    public UserShoppingCart getByProductId(Long idProduct, Long idCart) {
-        return cartRepository.getByProductId(idProduct, idCart);
+    public UserShoppingCart getByGoodsId(Long idGoods, Long idCart) {
+        return cartRepository.getByGoodsId(idGoods, idCart);
     }
 
     public void remove(Long id) {
         cartRepository.deleteById(id);
     }
 
-    public UserShoppingCart remove(Long idCart, Long idProduct) {
-        return cartRepository.deleteProductFromCart(idCart, idProduct);
+    public UserShoppingCart remove(Long idCart, Long idGoods) {
+        return cartRepository.deleteGoodsFromCart(idCart, idGoods);
     }
 
 
@@ -52,7 +52,7 @@ public class UserShoppingCartService {
         return cartRepository.findAllByIdShoppingCart(id);
     }
 
-    public int getQuantityProductsInUserShoppingCart(Long idProduct, Long idCart) {
-        return getByProductId(idProduct, idCart).getQuantityProduct();
+    public int getQuantityGoodsInUserShoppingCart(Long idGoods, Long idCart) {
+        return getByGoodsId(idGoods, idCart).getQuantityGoods();
     }
 }
