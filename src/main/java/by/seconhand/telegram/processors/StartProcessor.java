@@ -8,6 +8,7 @@ public class StartProcessor implements Processor {
 
     @Override
     public String run() {
-        return "Привет, для правильной работы мне нужно API сервиса Talk-Me и Мой класс.\n";
+        return "Привет, это первый интернет-магазин секонд-хэнд в Telegram.\nУ меня очень много" +
+                "вещей и мы обязательно тебе что-то подберём. Нажимай кнопку 'Погнали' и погнали!";
     }
 }

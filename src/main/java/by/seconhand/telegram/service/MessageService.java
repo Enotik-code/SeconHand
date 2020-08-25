@@ -1,6 +1,7 @@
 package by.seconhand.telegram.service;
 
 import by.seconhand.telegram.bot.Bot;
+import by.seconhand.telegram.buttons.ButtonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,6 +15,9 @@ public class MessageService {
     @Autowired
     private Bot bot;
 
+    @Autowired
+    private ButtonService buttonService;
+
     private static DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 
     public synchronized void sendMessage(Long chatId, String text) {
@@ -21,6 +25,15 @@ public class MessageService {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setChatId(chatId.toString());
             sendMessage.setText(text);
+            if(text.startsWith("Привет")){
+               buttonService.setButtonsAfterStart(sendMessage);
+            }
+            if(sendMessage.getText().startsWith("Выбери")){
+                buttonService.setButtonsAfterSecondMessage(sendMessage);
+            }
+            if(sendMessage.getText().startsWith("Информация")){
+                buttonService.setButtonsAfterSecondMessage(sendMessage);
+            }
             bot.execute(sendMessage);
         } catch (TelegramApiException e) {
             System.out.println(e.toString());

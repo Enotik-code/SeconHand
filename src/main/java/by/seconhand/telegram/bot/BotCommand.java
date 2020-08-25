@@ -4,8 +4,8 @@ public enum BotCommand {
     START("/start"),
     HELP("/help"),
     SETTING("/settings"),
-    MYCLASS("/myclass"),
-    TALKME("/talkme"),
+    GO("Погнали"),
+    INFO("Моя информация"),
     NONE("/none");
 
     String command;

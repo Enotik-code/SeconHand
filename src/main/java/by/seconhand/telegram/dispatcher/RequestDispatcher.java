@@ -1,10 +1,9 @@
 package by.seconhand.telegram.dispatcher;
 
+import by.seconhand.bean.Client;
+import by.seconhand.service.ClientService;
 import by.seconhand.telegram.bot.BotCommand;
-import by.seconhand.telegram.dao.service.TelegramService;
-import by.seconhand.telegram.processors.HelpProcessor;
-import by.seconhand.telegram.processors.SettingProcessor;
-import by.seconhand.telegram.processors.StartProcessor;
+import by.seconhand.telegram.processors.*;
 import by.seconhand.telegram.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,23 +32,41 @@ public class RequestDispatcher {
     private StartProcessor startProcessor;
 
     @Autowired
-    private TelegramService telegramService;
+    private InfoProcessor infoProcessor;
+
+    @Autowired
+    private GoProcessor goProcessor;
+
+    @Autowired
+    private ClientService clientService;
+
+   // @Autowired
+   // private TelegramService telegramService;
 
     public void dispatch(Update update) {
         chatId = update.getMessage().getChatId();
-        telegramService.saveClient(telegramService.buildNewClient(chatId));
+        //telegramService.saveClient(telegramService.buildNewClient(chatId));
         //if(telegramService.getClient(chatId).getTypeSubscribe().equals("Test time")) {
             switch (getCommand(update)) {
                 case HELP:
+                    //System.out.println(update.getMessage().getContact().getPhoneNumber());
                     messageService.sendMessage(chatId, helpProcessor.run());
                     break;
                 case START:
-                   //
+                    messageService.sendMessage(chatId, startProcessor.run());
                     break;
                 case SETTING:
                     messageService.sendMessage(chatId, settingProcessor.run());
                     break;
-
+                case GO:
+                    messageService.sendMessage(chatId, goProcessor.run());
+                    break;
+                case INFO:
+                    clientService.saveClient(Client.builder()
+                            .id(chatId)
+                            .build());
+                    messageService.sendMessage(chatId, infoProcessor.run());
+                    break;
             }
         //}
         //else   messageService.sendMessage(chatId, noSubscribeProcessor.run());
@@ -66,14 +83,10 @@ public class RequestDispatcher {
                     return START;
                 } else if (msgText.startsWith(SETTING.getCommand())) {
                     return SETTING;
-                } else if (msgText.startsWith(TALKME.getCommand())) {
-                    ApiTalkMe = msgText.substring(8, msgText.length());
-                    //System.out.println("апи для talk-me " + ApiTalkMe);
-                    return TALKME;
-                }else if (msgText.startsWith(MYCLASS.getCommand())) {
-                    ApiMyClass= msgText.substring(9, msgText.length());
-                    //System.out.println("апи для мой класс " + ApiMyClass);
-                    return MYCLASS;
+                }else if (msgText.startsWith(GO.getCommand())) {
+                    return GO;
+                }else if (msgText.startsWith(INFO.getCommand())) {
+                    return INFO;
                 }
             }
         }
